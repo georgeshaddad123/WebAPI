@@ -11,7 +11,7 @@ public class StudentsController: ControllerBase
         new Student(){Email = "georges.alhaddad02@gmail.com", FirstName = "Georges", ID = 1}
     };
     
-    [HttpGet("GetStudents")]
+    [HttpGet("getStudents")]
     public IEnumerable<Student> GetStudents()
     {
         return listOfStudents
