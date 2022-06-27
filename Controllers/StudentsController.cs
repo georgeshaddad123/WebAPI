@@ -1,4 +1,6 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Abstraction;
 
 namespace WebAPI.Controllers;
 
@@ -6,6 +8,12 @@ namespace WebAPI.Controllers;
 [Route("[controller]")]
 public class StudentsController: ControllerBase
 {
+    private readonly IStudentHelper _studentHelper;
+    public StudentsController(IStudentHelper studentHelper)
+    {
+        _studentHelper = studentHelper;
+    }
+
     private List<Student> listOfStudents = new List<Student>()
     {
         new Student(){Email = "georges.alhaddad02@gmail.com", FirstName = "Georges", ID = 1}
@@ -19,10 +27,9 @@ public class StudentsController: ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IEnumerable<Student> GetStudentsById(int id)
+    public Student GetStudentsById(int id)
     {
-        List<Student> studentList = listOfStudents.Where(x => x.ID.Equals(id)).ToList();    
-        return studentList;
+        return _studentHelper.GetStudentById(listOfStudents, id);
     }
     
     [HttpGet("getStudentsByName")]
@@ -31,7 +38,13 @@ public class StudentsController: ControllerBase
         List<Student> studentList = listOfStudents.Where(x => x.FirstName.Contains(param)).ToList();    
         return studentList;
     }
-    
+
+    // [HttpGet]
+    // public string GetCurrentDate([FromQuery] string param)
+    // {
+    //     return DateTime.Now.ToString();
+    // }
+    //
     // [HttpPost]
     // public IEnumerable<Student> AddStudent(Student student)
     // {
