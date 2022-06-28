@@ -6,7 +6,11 @@ public class StudentHelper:IStudentHelper
 {
     public Student GetStudentById(List<Student> students, int id)
     {
-        Student s = students.Where(x => x.ID.Equals(id)).First();
-        return s;
+        return students.Where(x => x.ID.Equals(id)).First();
+    }
+
+    public List<Student> GetStudentByName(List<Student> students, string parameter)
+    {
+        return students.Where(x => x.FirstName.Contains(parameter)).ToList();
     }
 }

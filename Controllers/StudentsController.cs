@@ -16,10 +16,13 @@ public class StudentsController: ControllerBase
 
     private List<Student> listOfStudents = new List<Student>()
     {
-        new Student(){Email = "georges.alhaddad02@gmail.com", FirstName = "Georges", ID = 1}
+        new Student(){Email = "georges.alhaddad02@gmail.com", FirstName = "Georges", ID = 1},
+        new Student(){Email = "hasan.dweik@gmail.com", FirstName = "Hasan", ID = 2},
+        new Student(){Email = "charbel.ashkar@gmail.com", FirstName = "Charbel", ID = 3},
+        new Student(){Email = "serge@gmail.com", FirstName = "Serge", ID = 4}
     };
     
-    [HttpGet("getStudents")]
+    [HttpGet("getAllStudents")]
     public IEnumerable<Student> GetStudents()
     {
         return listOfStudents
@@ -33,18 +36,11 @@ public class StudentsController: ControllerBase
     }
     
     [HttpGet("getStudentsByName")]
-    public IEnumerable<Student> GetStudentsByName([FromQuery] string param) 
+    public IEnumerable<Student> GetStudentsByName([FromQuery] string parameter)
     {
-        List<Student> studentList = listOfStudents.Where(x => x.FirstName.Contains(param)).ToList();    
-        return studentList;
+        return _studentHelper.GetStudentByName(listOfStudents, parameter);
     }
-
-    // [HttpGet]
-    // public string GetCurrentDate([FromQuery] string param)
-    // {
-    //     return DateTime.Now.ToString();
-    // }
-    //
+    
     // [HttpPost]
     // public IEnumerable<Student> AddStudent(Student student)
     // {
