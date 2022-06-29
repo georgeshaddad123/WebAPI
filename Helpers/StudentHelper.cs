@@ -2,21 +2,48 @@ using WebAPI.Abstraction;
 
 namespace WebAPI.Helpers;
 
-public class StudentHelper:IStudentHelper
+public class StudentHelper : IStudentHelper
 {
     public IEnumerable<Student> GetAllStudents(List<Student> students)
     {
         return students
             .ToArray();
     }
+
     public Student GetStudentById(List<Student> students, int id)
     {
-        return students.Where(x => x.ID.Equals(id)).First();
+        Student s = new Student();
+        try
+        {
+            s = students.Where(x => x.ID.Equals(id)).First();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("The id given is not found");
+            throw;
+        }
+        finally
+        {
+            Console.WriteLine("Statement executed");
+        }
+
+        return s;
     }
 
     public List<Student> GetStudentByName(List<Student> students, string parameter)
     {
-        return students.Where(x => x.FirstName.Contains(parameter)).ToList();
+        List<Student> s = new List<Student>();
+        try
+        {
+            s = students.Where(x => x.FirstName.Contains(parameter)).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("There's no one having the letter " + parameter);
+            throw;
+        }
+
+        return s;
     }
 
     public IEnumerable<Student> AddStudent(List<Student> students, Student student)

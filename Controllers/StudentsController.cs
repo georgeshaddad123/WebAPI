@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Abstraction;
@@ -40,13 +41,6 @@ public class StudentsController : ControllerBase
     {
         return _studentHelper.GetStudentByName(listOfStudents, parameter);
     }
-    
-    [HttpGet("getCurrentDate")]
-    public string GetCurrentDate(string header)
-    {
-        CultureInfo cultureInfo = new CultureInfo(header);
-        return DateTime.Now.ToString(cultureInfo);
-    }
 
     [HttpPost("addStudent")]
     public IEnumerable<Student> AddStudent(Student student)
@@ -59,9 +53,9 @@ public class StudentsController : ControllerBase
     {
         return _studentHelper.UpdateStudent(listOfStudents, id, name);
     }
-
+    
     [HttpDelete("deleteStudent")]
-    public IEnumerable<Student> DeleteStudent(int id)
+    public IEnumerable<Student> DeleteStudent([Required]int id)
     {
         return _studentHelper.DeleteStudent(listOfStudents, id);
     }
